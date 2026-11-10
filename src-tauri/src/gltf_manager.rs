@@ -1,0 +1,1 @@
+// This file has been removed as GLTF handling is now done in JavaScript using gltf-transform

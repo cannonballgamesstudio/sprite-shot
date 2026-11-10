@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --color-panel: #2a2a2a;
+  --color-panel-border: #3a3a3a;
+  --color-canvas: #1a1a1a;
+  --color-header: #333333;
+  --color-accent: #4a90d9;
+  --color-accent-hover: #3a7cc5;
+  --color-fg: #cccccc;
+  --color-fg-muted: #888888;
+  --color-input: #333333;
+  --color-input-border: #3a3a3a;
+  --color-titlebar: #FBF236;
+}
+
+html, body, #root {
+  @apply h-full w-full m-0 p-0 overflow-hidden box-border bg-canvas text-fg;
+}
+
+body, input, select, button {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbars — no Tailwind equivalent */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { @apply bg-canvas; }
+::-webkit-scrollbar-thumb { @apply bg-[#444] rounded-sm; }
+::-webkit-scrollbar-thumb:hover { @apply bg-[#555]; }
+* { scrollbar-width: thin; scrollbar-color: #444 var(--color-canvas); }
+
+/* Range thumb — pseudo-elements need CSS */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  @apply w-2.5 h-[18px] bg-accent rounded-sm cursor-pointer;
+}
+
+/* Keyframe animation */
+@keyframes spin360 {
+  0% { transform: rotate(0deg) scale(1); }
+  20% { transform: rotate(72deg) scale(1.15); }
+  50% { transform: rotate(180deg) scale(1.15); }
+  80% { transform: rotate(288deg) scale(1.15); }
+  100% { transform: rotate(359deg) scale(1); }
+}
+img.spin { animation: spin360 0.7s linear forwards; }

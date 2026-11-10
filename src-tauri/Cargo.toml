@@ -1,0 +1,57 @@
+[package]
+name = "sprite-shot"
+version = "0.1.0"
+description = "3D-to-sprite-sheet capture tool"
+authors = ["Alexander Adkins"]
+license = "MIT"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "sprite_shot_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["protocol-asset"] }
+tauri-plugin-dialog = "2.2"
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri-plugin-fs = "2"
+base64 = "0.22.1"
+dirs-next = "2.0.0"
+chrono = { version = "0.4", features = ["serde"] }
+anyhow = "1.0"
+
+# Gaussian splat training (optional, enable with `--features splat-training`)
+brush-process = { git = "https://github.com/ArthurBrussee/brush", rev = "40d3137d969048e22e959b2eac197d22b333357b", features = ["training"], optional = true }
+brush-vfs = { git = "https://github.com/ArthurBrussee/brush", rev = "40d3137d969048e22e959b2eac197d22b333357b", optional = true }
+futures-lite = { version = "2", optional = true }
+
+[features]
+default = []
+splat-training = ["dep:brush-process", "dep:brush-vfs", "dep:futures-lite"]
+
+# Workspace required so [patch.crates-io] is respected.
+# Brush's patched deps (wgpu, naga) don't propagate across workspace boundaries,
+# so they are mirrored here from brush's Cargo.toml at the pinned rev.
+[workspace]
+members = ["."]
+
+[patch.crates-io]
+wgpu = { git = "https://github.com/gfx-rs/wgpu", rev = "a6d9d3254e8d5ed7de08634cd9ddd7b63956f7f3" }
+naga = { git = "https://github.com/gfx-rs/wgpu", rev = "a6d9d3254e8d5ed7de08634cd9ddd7b63956f7f3" }
+
+# burn is pinned in Cargo.lock to the commit brush's own lockfile uses.
+# Avoid a blanket `cargo update`; update brush and burn together.
+
+[profile.dev]
+opt-level = 1
+debug = 1

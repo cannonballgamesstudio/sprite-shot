@@ -1,0 +1,47 @@
+# Dependencies and build output
+node_modules/
+dist/
+dist-ssr/
+target/
+src-tauri/target/
+src-tauri/gen/schemas/
+*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# TLS certificates and keys
+.cert/
+*.pem
+*.key
+*.crt
+*.p12
+
+# Converter binaries (see README)
+src-tauri/binaries/
+FBX2glTF*
+
+# Art assets: bring your own
+src/assets/**/*.fbx
+src/assets/**/*.glb
+src/assets/**/*.gltf
+src/assets/**/*.bin
+src/assets/**/*.bvh
+src/assets/**/*.hdr
+src/assets/**/*.exr
+*.fbx
+*.bvh
+
+# User projects and output
+*.spriteshot
+.backups/
+batch-report.json
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+*.suo
+*.sw?
